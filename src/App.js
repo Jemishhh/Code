@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -13,6 +13,7 @@ import SignUp from './components/SignUp';
 import Company from './pages/Company';
 import AddUser from './pages/AddUser';
 import Aadhar from './pages/Aadhar';
+import Profile from './pages/Profile';
 
 const App = () => {
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -93,15 +94,13 @@ const App = () => {
                 <Route path="/color-mapping" element={<ColorMapping />} />
                 <Route path="/pyramid" element={<Pyramid />} />
                 <Route path="/stacked" element={<Stacked />} />
-               
-               
-               
                 <Route path="/login" element={<Login />} />
                 <Route path="/SignUp" element={<SignUp />} />
                 <Route path="/company" element={<Company />} />
                 <Route path="/adduser" element={<AddUser />} />
                 <Route path="/aadhar" element={<Aadhar />} />
-
+                {/* <Route path="/profile" element={<Profile />} /> */}
+                <Route path="/user/:email" element={<Profile />} />
               </Routes>
             </div>
             <Footer />

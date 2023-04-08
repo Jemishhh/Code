@@ -1,56 +1,69 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
-
 import { customersData, customersGrid } from '../data/dummy';
 import { Header } from '../components';
-
-function handleActionBegin(args) {
-  if (args.requestType === 'beginedit' && args.column.field === 'id') {
-    // Open a new tab with the user's details
-    console.log("clickec");
-    const userId = args.rowData.id;
-    window.open(`/users/${userId}`);
-  }
-}
-const handleSubmit=() => {
-    
-}
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const Customers = () => {
   const selectionsettings = { persistSelection: true };
   const toolbarOptions = ['Delete'];
   const editing = { allowDeleting: false, allowEditing: false };
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://localhost:7153/api/employee/all/jemish@example.com');
+        console.log(response.data)
+        // setLocations(response.data);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+  
+    fetchData().then((res) => {
+      // setLocations(res);
+      console.log(res);
+      setUsers(res);
+    }).catch((error) => console.log(error));
+  }, []);
+
+  const handleClick = (email) => {
+    navigate(`/user/${email}`);
+  }
 
   return (
     <>
       <div>
      
-     <div class="table-responsive">
-       <table class="table table-striped table-sm">
+     <div className="table-responsive">
+       <table className="table table-striped table-sm">
          <thead>
            <tr>
-             <th>#</th>
-             <th>Header</th>
-             <th>Header</th>
-             <th>Header</th>
-             <th>Header</th>
+             <th>Name</th>
+             <th>Email</th>
+             <th>Mobile</th>
+             <th>Address</th>
+             <th>Pan</th>
            </tr>
          </thead>
          <tbody>
-           <tr>
-             <td><btn onClick={handleSubmit}> 1,001</btn></td>
-             <td>Lorem</td>
-             <td>ipsum</td>
-             <td>dolor</td>
-             <td>sit</td>
-           </tr>
-           <tr>
-             <td><btn  > 1,002</btn></td>
-             <td>Lorem</td>
-             <td>ipsum</td>
-             <td>dolor</td>
-             <td>sit</td>
-           </tr>
+         {
+         users &&  users.map((obj)=> 
+              <tr key={obj.id}>
+                <td onClick={() => handleClick(obj.employeeEmail)}>{obj?.employeeName}</td>
+                <td>{obj?.employeeEmail}</td>
+                <td>{obj?.mobile}</td>
+                <td>{obj?.address}</td>
+                <td>{obj?.pan}</td>
+              </tr>
+            )
+         }
+          
            </tbody>
            </table>
            </div>
@@ -60,7 +73,7 @@ const Customers = () => {
 
 
 </div>
-   
+
     </>
   );
 };
