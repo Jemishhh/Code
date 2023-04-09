@@ -71,7 +71,7 @@ const App = () => {
 
               <Routes>
                 {/* dashboard  */}
-                <Route path="/" element={(<Ecommerce />)} />
+                <Route path="/" element={(<SignUp />)} />
                 <Route path="/ecommerce" element={(<Ecommerce />)} />
 
                 {/* pages  */}
@@ -99,7 +99,7 @@ const App = () => {
                 <Route path="/SignUp" element={<SignUp />} />
                 <Route path="/company" element={<Company />} />
                 <Route path="/AddUser" element={<AddUser />} />
-                <Route path="/AadharVerification" element={<Aadhar />} />
+                <Route path="/AadharVerification/:employeeEmail" element={<Aadhar />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/user/:email" element={<Profile />} />
               </Routes>

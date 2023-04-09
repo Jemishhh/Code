@@ -1,12 +1,39 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios"
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Profile = () => {
     const [users, setUsers] = useState([]);
     const {email} = useParams()
     console.log(email)
+    const navigate = useNavigate()
+     const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      
+      const { data } = await axios.post(
+        "https://localhost:7153/api/authentication/login",
+        {
+          "email" : username,
+          "password" : password,
+        }
+      );
+      console.log("data ", data);
+      localStorage.setItem("email", username);
+      navigate('/company');
+      // toast.success("Login successfully");
+      
+      setUser(email);
+      // navigate("/");
+    } catch (err) {
+      console.log(err?.response?.data?.message);
+      // toast.error("Something went wrong login through google account");
+    }
+  };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -23,12 +50,43 @@ const Profile = () => {
   
         fetchData().then((res) => {
           // setLocations(res);
-          console.log(res);
+          // console.log(res);
           setUsers(res);
         })
+
+        // localStorage.setItem("employeemail", employeeName);
       }, []);
+      const handleClick = (employeeEmail) => {
+        navigate(`/AadharVerification/${employeeEmail}`);
+      }
 
 
+
+
+      const Green = async (e) => {
+        e.preventDefault();
+        try {
+          
+          const { data } = await axios.post(
+            "https://localhost:7153/api/authentication/login",
+            {
+              "email" : employeeEmail,
+              "color" : green,
+            }
+          );
+          console.log("data ", data);
+          localStorage.setItem("email", username);
+          navigate('/company');
+          // toast.success("Login successfully");
+          
+          setUser(email);
+          // navigate("/");
+        } catch (err) {
+          console.log(err?.response?.data?.message);
+          // toast.error("Something went wrong login through google account");
+        }
+      };
+    
   return (
     <div>
  <div>
@@ -52,12 +110,11 @@ const Profile = () => {
               <div className="card-body text-center">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                   className="rounded-circle img-fluid" styles="width: 150px;" />
-                <h5 className="my-3">John Smith</h5>
-                <p className="text-muted mb-1">Full Stack Developer</p>
-                <p className="text-muted mb-4">Bay Area, San Francisco, CA</p>
+                <h5 className="my-3">{users.employeeName}</h5>
+                
+                <p className="text-muted mb-4">{users.address}</p>
                 <div className="d-flex justify-content-center mb-2">
-                  <button type="button" className="btn btn-primary">Follow</button>
-                  <button type="button" className="btn btn-outline-primary ms-1">Message</button>
+                  
                 </div>
               </div>
             </div>
@@ -123,19 +180,97 @@ const Profile = () => {
                   </div>
                 </div>
                 <hr />
-
+  
+                
               </div>
+              
             </div>
-         
+            <div >
+<button  className='btn btn-primary m-3' onClick={() => handleClick(users.employeeEmail)}>Verify Aaadhar</button>
+<button type="button" className="btn btn-outline-secondary m-3"  >Delete</button>
+<button type="button" className="btn btn-outline-success m-3" onClick={() => Green(users.employeeEmail)}>Green Flag</button>
+<button type="button" className="btn btn-outline-danger m-3">Red Flag</button>
+<button type="button" className="btn btn-outline-warning m-3">Yellow Flag</button>
+    </div>
+    <br></br>
+<h1 className='ml-3'>Aaadhar Details</h1>
+    <div className="col-lg-12">
+            <div className="card mb-4">
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-sm-3">
+                    <p className="mb-0">Aaadhar Name</p>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="text-muted mb-0">{users.employeeName}</p>
+                  </div>
+                </div>
+                <hr />
+                <div className="row">
+                  <div className="col-sm-3">
+                    <p className="mb-0">Address</p>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="text-muted mb-0">{users.email}</p>
+                  </div>
+                </div>
+                <hr />
+                <div className="row">
+                  <div className="col-sm-3">
+                    <p className="mb-0">Aadhar Number</p>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="text-muted mb-0">{users.mobile}</p>
+                  </div>
+                </div>
+                <hr />
+                
+                  
+                <div className="row">
+                  <div className="col-sm-3">
+                    <p className="mb-0">Gender</p>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="text-muted mb-0">{users.address}</p>
+                  </div>
+                </div>
+                <hr />
+                <div className="row">
+                  <div className="col-sm-3">
+                    <p className="mb-0">ZIP</p>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="text-muted mb-0">{users.pan}</p>
+                  </div>
+                </div>
+                <hr />
+
+                <div className="row">
+                  <div className="col-sm-3">
+                    <p className="mb-0">DOB</p>
+                  </div>
+                  <div className="col-sm-9">
+                    <p className="text-muted mb-0">{users.previousCompany}</p>
+                  </div>
+                </div>
+                <hr />
+  
+                
+              </div>
+              
+            </div>
+            
           </div>
+          </div>
+
+          
         </div>
       </div>
+      
 
     </section>
-  
-  </div >
-
-    </div>
+</div>
+</div>
   )
 }
 

@@ -1,15 +1,21 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
+
 
 const AddUser = () => {
 
+  const navigate = useNavigate();
 
   const [employeemail, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [prevcomp, setPrevComp] = useState("");
-  const [name, setName] = useState("");
-  const [pan, setPan] = useState("");
+  const [address, setAddress] =useState("");
+  const [mobile, setMobile] = useState("");
+  const [prevcomp, setPrevComp] = useState("");
+  const [name, setName]  = useState("");
+  const [pan, setPan] = useState("");
+  const [user, setUser] = useState({})
+  const [flag, setFlag] = useState("")
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,9 +40,10 @@ const AddUser = () => {
       // toast.success("Login successfully");
       
       setUser(email);
+      navigate('/customers');
       // navigate("/");
     } catch (err) {
-      console.log(err?.response?.data?.message);
+      console.log(err);
       // toast.error("Something went wrong login through google account");
     }
   };
@@ -111,6 +118,11 @@ const AddUser = () => {
                   
                 </div>
 
+                <div className="form-outline mb-4">
+                <label className="form-label" for="form3Example3">Flags</label>
+                  <input type="text" id="form3Example3" className="form-control" onChange={(e) => setFlag(e.target.value)} />
+                  
+                </div>
               
                 {/* <div className="form-outline mb-4">
                   <input type="file" id="form3Example3" className="form-control"  />

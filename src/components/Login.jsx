@@ -2,12 +2,17 @@
 import React, {useEffect, useState} from 'react'
 import SignUp from './SignUp'
 import axios from "axios"
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+ 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +26,8 @@ function Login() {
         }
       );
       console.log("data ", data);
-      localStorage.setItem("email",email);
+      localStorage.setItem("email", username);
+      navigate('/company');
       // toast.success("Login successfully");
       
       setUser(email);
@@ -68,27 +74,31 @@ function Login() {
 
                 {/* <!-- Email input --> */}
                 <div className="form-outline mb-4">
+                <label className="form-label" for="form3Example3">Email address</label>
                   <input type="email" id="form3Example3" className="form-control" onChange={(e) => setUsername(e.target.value)}/>
-                  <label className="form-label" for="form3Example3">Email address</label>
+                  
                 </div>
 
                 {/* <!-- Password input --> */}
                 <div className="form-outline mb-4">
+                <label className="form-label" for="form3Example4">Password</label>
                   <input type="password" id="form3Example4" className="form-control" onChange={(e) => setPassword(e.target.value)}/>
-                  <label className="form-label" for="form3Example4">Password</label>
+                  
                 </div>
 
                 {/* <!-- Checkbox --> */}
-                <div className="form-check d-flex justify-content-center mb-4">
+                {/* <div className="form-check d-flex justify-content-center mb-4">
                   <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
                   <label className="form-check-label" for="form2Example33">
                     Subscribe to our newsletter
                   </label>
-                </div>
+                </div> */}
 
                 {/* <!-- Submit button --> */}
-                
-         <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Sign Up</button>
+                <div class="d-flex justify-content-center mb-4">
+                <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Sign Up</button>
+
+                </div>  
        
 
                 {/* <!-- Register buttons --> */}

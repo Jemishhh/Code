@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react'
 // import SignUp from './SignUp'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
+
 
 
 function SignUp() {
 
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setUserEmail] = useState("");
@@ -24,11 +27,12 @@ function SignUp() {
       );
       console.log("data ", data);
       localStorage.setItem("userInfo", JSON.stringify(data));
+      navigate('/login');
       // toast.success("Login successfully");
       // setUser(data);
       // navigate("/");
     } catch (err) {
-      console.log(err?.response?.data?.message);
+      console.log(err);
       // toast.error("Something went wrong login through google account");
   }
 };
@@ -82,13 +86,16 @@ function SignUp() {
                 <div className="form-check d-flex justify-content-center mb-4">
                   <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
                   <label className="form-check-label" for="form2Example33">
-                    Subscribe to our newsletter
+Agree To T&C
                   </label>
                 </div>
 
                 {/* <!-- Submit button --> */}
-               
+                <div class="d-flex justify-content-center mb-4">
                 <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Login</button>
+
+                </div>  
+       
        
               
                 <div className="text-center">

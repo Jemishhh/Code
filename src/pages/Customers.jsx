@@ -14,9 +14,12 @@ const Customers = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    const email = localStorage.getItem("email")
+    
+      console.log(email)
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://localhost:7153/api/employee/all/jemish@example.com');
+        const response = await axios.get(`https://localhost:7153/api/employee/all/${email}`);
         console.log(response.data)
         // setLocations(response.data);
         return response.data;
@@ -49,7 +52,7 @@ const Customers = () => {
              <th>Email</th>
              <th>Mobile</th>
              <th>Address</th>
-             <th>Pan</th>
+             <th>Flags</th>
            </tr>
          </thead>
          <tbody>
@@ -60,13 +63,18 @@ const Customers = () => {
                 <td>{obj?.employeeEmail}</td>
                 <td>{obj?.mobile}</td>
                 <td>{obj?.address}</td>
-                <td>{obj?.pan}</td>
+                <td>{obj?.flags}</td>
               </tr>
             )
          }
           
            </tbody>
            </table>
+           </div>
+
+
+           <div>
+
            </div>
           
  

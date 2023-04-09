@@ -515,6 +515,7 @@ export const links = [
     links: [
       {
         name: "ecommerce",
+        link: "ecommerce",
         icon: <FiShoppingBag />,
       },
     ],

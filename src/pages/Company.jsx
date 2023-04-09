@@ -1,15 +1,19 @@
 // import { Link } from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
+
+  
 
 function Company() {
-
+const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [address, setAddress] = useState("");
   const [company, setCompanyName] = useState("");
   const [website, setWebsiteName] = useState("");
   const email =localStorage.getItem("email")
-  console.log(email)
+  const [user, setUser] = useState({})
+  // console.log(email)
 
 
   const handleSubmit = async (e) => {
@@ -28,11 +32,11 @@ function Company() {
         }
       );
       console.log("data ", data);
-      toast.success("Login successfully");
+      // toast.success("Login successfully");
       setUser(data);
-      navigate("/");
+      navigate("/AddUser");
     } catch (err) {
-      console.log(err?.response?.data?.message);
+      console.log(err);
       // toast.error("Something went wrong login through google account");
    }
   };
@@ -66,25 +70,25 @@ function Company() {
           {/* <!-- 2 column grid layout with text inputs for the first and last names --> */}
           <div className="form-outline mb-4">
             <input type="text" id="form3Example3" className="form-control" onChange={(e) => setUsername(e.target.value)} />
-            <label className="form-label" for="form3Example3">Manager name</label>
+            <label className="form-label" htmlFor="form3Example3">Manager name</label>
           </div>
           
 
           {/* <!-- Email input --> */}
           <div className="form-outline mb-4">
             <input type="text" id="form3Example3" className="form-control" onChange={(e) => setCompanyName(e.target.value)} />
-            <label className="form-label" for="form3Example3">Company name</label>
+            <label className="form-label" htmlFor="form3Example3">Company name</label>
           </div>
 
           {/* <!-- Password input --> */}
           <div className="form-outline mb-4">
             <input type="text" id="form3Example4" className="form-control" onChange={(e) => setWebsiteName(e.target.value)} />
-            <label className="form-label" for="form3Example4">Website name</label>
+            <label className="form-label" htmlFor="form3Example4">Website name</label>
           </div>
 
           <div className="form-outline mb-4">
             <textarea id="form3Example4" className="form-control" onChange={(e) => setAddress(e.target.value)}/>
-            <label className="form-label" for="form3Example4">Address</label>
+            <label className="form-label" htmlFor="form3Example4">Address</label>
           </div>
         
          
