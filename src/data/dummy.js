@@ -523,17 +523,21 @@ export const links = [
   {
     title: "Pages",
     links: [
-      {
-        name: "orders",
-        icon: <AiOutlineShoppingCart />,
-      },
-      {
-        name: "employees",
-        icon: <IoMdContacts />,
-      },
+      
       {
         name: "customers",
+        link:"customers",
         icon: <RiContactsLine />,
+      },{
+        name: "Add User",
+        link:"AddUser",
+        icon: <RiContactsLine />,
+
+      },
+      {
+        name: "Aadhar Verification",
+        link:"AadharVerification",
+        icon: <IoMdContacts />,
       },
     ],
   },
@@ -3030,8 +3034,7 @@ export const ecomPieChartData = [
   { x: "2018", y: 18, text: "35%" },
   { x: "2019", y: 18, text: "15%" },
   { x: "2020", y: 18, text: "25%" },
-  { x: "2022", y: 18, text: "25%" },
-];
+ ];
 
 export const stackedChartData = [
   [

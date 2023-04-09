@@ -26,28 +26,33 @@ const Aadhar = () => {
 
                 {/* <!-- Email input --> */}
                 <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example3">Enter your Aadhar number</label>
                   <input type="number" id="form3Example3" class="form-control" />
-                  <label class="form-label" for="form3Example3">Enter your Aadhar number</label>
+                  
                 </div>
 
                 <div class="d-flex justify-content-center mb-4">
-                  <button class="btn white"  id="form2Example33">SEND OTP</button>
+                  <button class="btn btn-primary"  id="form2Example33">SEND OTP</button>
                   
                 </div>
 
                 {/* <!-- Password input --> */}
                 <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example4">Enter OTP</label>
                   <input type="number" id="form3Example4" class="form-control" />
-                  <label class="form-label" for="form3Example4">Enter OTP</label>
+                  
                 </div>
 
                 {/* <!-- Checkbox --> */}
                 
 
                 {/* <!-- Submit button --> */}
-                <button type="submit" class="btn btn-primary btn-block mb-4">
+                <div class="d-flex justify-content-center mb-4">
+                <button class="btn btn-primary btn-block mb-4">
                   Submit
                 </button>
+                </div>
+               
 
                 {/* <!-- Register buttons --> */}
                

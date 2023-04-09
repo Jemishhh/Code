@@ -1,8 +1,40 @@
-import React from 'react'
+
+import React, {useEffect, useState} from 'react'
 import SignUp from './SignUp'
+import axios from "axios"
 import { Link } from 'react-router-dom'
 
+
 function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      
+      const { data } = await axios.post(
+        "https://localhost:7153/api/authentication/login",
+        {
+          "email" : username,
+          "password" : password,
+        }
+      );
+      console.log("data ", data);
+      localStorage.setItem("email",email);
+      // toast.success("Login successfully");
+      
+      setUser(email);
+      // navigate("/");
+    } catch (err) {
+      console.log(err?.response?.data?.message);
+      // toast.error("Something went wrong login through google account");
+    }
+  };
+
+
+
+  
   return (
     <div>
       {/* <!-- Section: Design Block --> */}
@@ -36,13 +68,13 @@ function Login() {
 
                 {/* <!-- Email input --> */}
                 <div className="form-outline mb-4">
-                  <input type="email" id="form3Example3" className="form-control" />
+                  <input type="email" id="form3Example3" className="form-control" onChange={(e) => setUsername(e.target.value)}/>
                   <label className="form-label" for="form3Example3">Email address</label>
                 </div>
 
                 {/* <!-- Password input --> */}
                 <div className="form-outline mb-4">
-                  <input type="password" id="form3Example4" className="form-control" />
+                  <input type="password" id="form3Example4" className="form-control" onChange={(e) => setPassword(e.target.value)}/>
                   <label className="form-label" for="form3Example4">Password</label>
                 </div>
 
@@ -55,9 +87,9 @@ function Login() {
                 </div>
 
                 {/* <!-- Submit button --> */}
-                <Link to="/SignUp" className="btn btn-primary btn-block mb-4">
-          Sign Up
-          </Link>
+                
+         <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Sign Up</button>
+       
 
                 {/* <!-- Register buttons --> */}
                 <div className="text-center">

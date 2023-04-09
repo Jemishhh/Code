@@ -1,6 +1,38 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+// import SignUp from './SignUp'
+import axios from "axios"
+
+
 function SignUp() {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setUserEmail] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+
+      const { data } = await axios.post(
+        "https://localhost:7153/api/authentication",
+        {
+          "username" : username,
+          "email" : email,
+          "password" : password
+          
+        }
+      );
+      console.log("data ", data);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      // toast.success("Login successfully");
+      // setUser(data);
+      // navigate("/");
+    } catch (err) {
+      console.log(err?.response?.data?.message);
+      // toast.error("Something went wrong login through google account");
+  }
+};
+
   return (
     <div>
       {/* <!-- Section: Design Block --> */}
@@ -31,18 +63,18 @@ function SignUp() {
               
 
                       <div className="form-outline mb-4">
-                      <input type="text" id="form3Example1" className="form-control" />
+                      <input type="text" id="form3Example1" className="form-control" onChange={(e) => setUsername(e.target.value)} />
                       <label className="form-label" for="form3Example1">User Name</label>
                     </div>
                 {/* <!-- Email input --> */}
                 <div className="form-outline mb-4">
-                  <input type="email" id="form3Example3" className="form-control" />
+                  <input type="email" id="form3Example3" className="form-control" onChange={(e) => setUserEmail(e.target.value)} />
                   <label className="form-label" for="form3Example3">Email address</label>
                 </div>
 
                 {/* <!-- Password input --> */}
                 <div className="form-outline mb-4">
-                  <input type="password" id="form3Example4" className="form-control" />
+                  <input type="password" id="form3Example4" className="form-control" onChange={(e) => setPassword(e.target.value) }/>
                   <label className="form-label" for="form3Example4">Password</label>
                 </div>
 
@@ -56,10 +88,8 @@ function SignUp() {
 
                 {/* <!-- Submit button --> */}
                
-                <Link to="/login" className="btn btn-primary btn-block mb-4">
-          Login
-          </Link>
-
+                <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Login</button>
+       
               
                 <div className="text-center">
                   <p>or sign up with:</p>

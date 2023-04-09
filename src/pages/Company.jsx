@@ -1,8 +1,44 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+// import { Link } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import axios from "axios"
 
 function Company() {
+
+  const [username, setUsername] = useState("");
+  const [address, setAddress] = useState("");
+  const [company, setCompanyName] = useState("");
+  const [website, setWebsiteName] = useState("");
+  const email =localStorage.getItem("email")
+  console.log(email)
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const email =localStorage.getItem("email")
+      console.log(email)
+      const { data } = await axios.post(
+        "https://localhost:7153/api/employer",
+        {
+          "managerName": username,
+          "companyName" : company,
+          "email":email,
+          "website": website,
+          "address":address
+        }
+      );
+      console.log("data ", data);
+      toast.success("Login successfully");
+      setUser(data);
+      navigate("/");
+    } catch (err) {
+      console.log(err?.response?.data?.message);
+      // toast.error("Something went wrong login through google account");
+   }
+  };
+
+
+
   return (
    
     <div>
@@ -29,25 +65,25 @@ function Company() {
           <form>
           {/* <!-- 2 column grid layout with text inputs for the first and last names --> */}
           <div className="form-outline mb-4">
-            <input type="text" id="form3Example3" className="form-control" />
-            <label className="form-label" for="form3Example3">Username</label>
+            <input type="text" id="form3Example3" className="form-control" onChange={(e) => setUsername(e.target.value)} />
+            <label className="form-label" for="form3Example3">Manager name</label>
           </div>
           
 
           {/* <!-- Email input --> */}
           <div className="form-outline mb-4">
-            <input type="text" id="form3Example3" className="form-control" />
+            <input type="text" id="form3Example3" className="form-control" onChange={(e) => setCompanyName(e.target.value)} />
             <label className="form-label" for="form3Example3">Company name</label>
           </div>
 
           {/* <!-- Password input --> */}
           <div className="form-outline mb-4">
-            <input type="text" id="form3Example4" className="form-control" />
+            <input type="text" id="form3Example4" className="form-control" onChange={(e) => setWebsiteName(e.target.value)} />
             <label className="form-label" for="form3Example4">Website name</label>
           </div>
 
           <div className="form-outline mb-4">
-            <textarea id="form3Example4" className="form-control" />
+            <textarea id="form3Example4" className="form-control" onChange={(e) => setAddress(e.target.value)}/>
             <label className="form-label" for="form3Example4">Address</label>
           </div>
         
@@ -57,9 +93,7 @@ function Company() {
           {/* <button type="submit" className="btn btn-primary btn-block mb-4">
             Add User
           </button> */}
-          <Link to="/SignUp" className="btn btn-primary btn-block mb-4">
-          ADD DETAILS
-          </Link>
+          <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Register now</button>
 
           
         </form>

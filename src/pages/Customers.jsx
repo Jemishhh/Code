@@ -9,6 +9,7 @@ const Customers = () => {
   const selectionsettings = { persistSelection: true };
   const toolbarOptions = ['Delete'];
   const editing = { allowDeleting: false, allowEditing: false };
+  
   const [users, setUsers] = useState([]);
   const navigate = useNavigate()
 
@@ -41,7 +42,7 @@ const Customers = () => {
       <div>
      
      <div className="table-responsive">
-       <table className="table table-striped table-sm">
+       <table className="table table-striped table-sm m-2">
          <thead>
            <tr>
              <th>Name</th>

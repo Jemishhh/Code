@@ -94,12 +94,13 @@ const App = () => {
                 <Route path="/color-mapping" element={<ColorMapping />} />
                 <Route path="/pyramid" element={<Pyramid />} />
                 <Route path="/stacked" element={<Stacked />} />
+
                 <Route path="/login" element={<Login />} />
                 <Route path="/SignUp" element={<SignUp />} />
                 <Route path="/company" element={<Company />} />
-                <Route path="/adduser" element={<AddUser />} />
-                <Route path="/aadhar" element={<Aadhar />} />
-                {/* <Route path="/profile" element={<Profile />} /> */}
+                <Route path="/AddUser" element={<AddUser />} />
+                <Route path="/AadharVerification" element={<Aadhar />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/user/:email" element={<Profile />} />
               </Routes>
             </div>

@@ -1,7 +1,48 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
+import axios from "axios"
 
 const AddUser = () => {
+
+
+  const [employeemail, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [prevcomp, setPrevComp] = useState("");
+  const [name, setName] = useState("");
+  const [pan, setPan] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const email =localStorage.getItem("email")
+    console.log(email)
+    try {
+      
+      const { data } = await axios.post(
+        "https://localhost:7153/api/employee",
+        {
+          "employeeName" : name,
+          "employeeEmail" : employeemail,
+          "mobile" : mobile,
+          "email":email,
+          "address" : address,
+          "previousCompany" : prevcomp,
+          "pan" : pan,
+        }
+      );
+      console.log("data ", data);
+      
+      // toast.success("Login successfully");
+      
+      setUser(email);
+      // navigate("/");
+    } catch (err) {
+      console.log(err?.response?.data?.message);
+      // toast.error("Something went wrong login through google account");
+    }
+  };
+
+
+
   return (
     <div>
       <div>
@@ -35,49 +76,54 @@ const AddUser = () => {
 
                 {/* <!-- Email input --> */}
                 <div className="form-outline mb-4 ">
-                  <input type="text" id="form3Example3" className="form-control" />
-                  <label className="form-label" for="form3Example3">Name</label>
+                 <label className="form-label" for="form3Example3">Name</label>
+                  <input type="text" id="form3Example3" className="form-control" onChange={(e) => setName(e.target.value)}/>
+                 
                 </div>
 
                 <div className="form-outline mb-4">
-                  <input type="email" id="form3Example3" className="form-control" />
-                  <label className="form-label" for="form3Example3">Email address</label>
+                <label className="form-label" for="form3Example3">Email address</label>
+
+                  <input type="email" id="form3Example3" className="form-control" onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 
                 <div className="form-outline mb-4">
-                  <input type="number" id="form3Example3" className="form-control" />
-                  <label className="form-label" for="form3Example3">Mobile No.</label>
+                <label className="form-label" for="form3Example3">Mobile No.</label>
+                  <input type="number" id="form3Example3" className="form-control" onChange={(e) => setMobile(e.target.value)} />
+                  
                 </div>
                 <div className="form-outline mb-4">
-                  <textarea type="text" id="form3Example3" className="form-control" />
-                  <label className="form-label" for="form3Example3">Address</label>
+                 <label className="form-label" for="form3Example3">Address</label>
+                  <textarea type="text" id="form3Example3" className="form-control" onChange={(e) => setAddress(e.target.value)} />
+                 
                 </div>
 
                 <div className="form-outline mb-4">
-                  <input type="text" id="form3Example3" className="form-control" />
                   <label className="form-label" for="form3Example3">Previous Company (If Any)</label>
+                  <input type="text" id="form3Example3" className="form-control"onChange={(e) => setPrevComp(e.target.value)} />
+                
                 </div>
-                <div className="form-outline mb-4">
-                  <input type="text" id="form3Example3" className="form-control" />
-                  <label className="form-label" for="form3Example3">Aadhar Number</label>
-                </div>
+                
               
                 <div className="form-outline mb-4">
-                  <input type="text" id="form3Example3" className="form-control" />
-                  <label className="form-label" for="form3Example3">PAN Number</label>
+                <label className="form-label" for="form3Example3">PAN Number</label>
+                  <input type="text" id="form3Example3" className="form-control" onChange={(e) => setPan(e.target.value)} />
+                  
                 </div>
 
               
-                <div className="form-outline mb-4">
-                  <input type="file" id="form3Example3" className="form-control" />
+                {/* <div className="form-outline mb-4">
+                  <input type="file" id="form3Example3" className="form-control"  />
                   <label className="form-label" for="form3Example3">Photo</label>
-                </div>
+                </div> */}
 
                 
                 {/* <!-- Submit button --> */}
-                <Link to="/SignUp" className="btn btn-primary btn-block mb-4">
-          Sign Up
-          </Link>
+                <div class="d-flex justify-content-center mb-4">
+                <button className="btn btn-primary btn-block mb-4 "  onClick={handleSubmit}> Add User</button>
+                </div>
+               
+
 
                 
                
@@ -88,7 +134,6 @@ const AddUser = () => {
       </div>
     </div>
   </div>
-  {/* <!-- Jumbotron --> */}
 </section>
 
     </div>
