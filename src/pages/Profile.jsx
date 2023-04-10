@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const Profile = () => {
     const [users, setUsers] = useState([]);
     const {email} = useParams()
+    const [employeeEmail,setEmployeeEmail]= useState("")
+    const [aadhaarUser, setAadhaarUser] = useState({});
     console.log(email)
     const navigate = useNavigate()
      const handleSubmit = async (e) => {
@@ -39,6 +41,8 @@ const Profile = () => {
         const fetchData = async () => {
           try {
             const response = await axios.get(`https://localhost:7153/api/employee/${email}`);
+            // const anotherRes = await axios.get(`https://localhost:7153/api/aadhaar/aadhaar/${email}`);
+            // console.log("Another response is : ", anotherRes.data);
             console.log(response.data)
             // setLocations(response.data);
             return response.data;   
@@ -46,6 +50,26 @@ const Profile = () => {
             console.error(error);
           }
         };
+
+        const fetchDataAadharr = async () => {
+          try {
+            // const response = await axios.get(`https://localhost:7153/api/employee/${email}`);
+            const anotherRes = await axios.get(`https://localhost:7153/api/aadhaar/aadhaar/${email}`);
+            console.log("Another response is : ", anotherRes.data);
+            // console.log(anotherRes.data)
+            // setLocations(response.data);
+            return anotherRes.data;   
+          } catch (error) {
+            return {}
+            console.error(error);
+          }
+        };
+
+        fetchDataAadharr().then(res => {
+          setAadhaarUser(res)
+        }).catch(err => {
+          setAadhaarUser({})
+        })
   
   
         fetchData().then((res) => {
@@ -55,8 +79,9 @@ const Profile = () => {
         })
 
         // localStorage.setItem("employeemail", employeeName);
-      }, []);
+      }, [employeeEmail]);
       const handleClick = (employeeEmail) => {
+        setEmployeeEmail(employeeEmail);
         navigate(`/AadharVerification/${employeeEmail}`);
       }
 
@@ -66,27 +91,68 @@ const Profile = () => {
       const Green = async (e) => {
         e.preventDefault();
         try {
-          
-          const { data } = await axios.post(
-            "https://localhost:7153/api/authentication/login",
-            {
-              "email" : employeeEmail,
-              "color" : green,
-            }
+          console.log(email)
+          const { data1 } = await axios.get(
+            `https://localhost:7153/api/flags/${employeeEmail}/green`,
+            
           );
-          console.log("data ", data);
-          localStorage.setItem("email", username);
-          navigate('/company');
+          console.log("data ", data1);
+         
           // toast.success("Login successfully");
           
-          setUser(email);
+          
           // navigate("/");
         } catch (err) {
-          console.log(err?.response?.data?.message);
+          console.log(err);
           // toast.error("Something went wrong login through google account");
         }
       };
+
     
+    const Yellow = async (e) => {
+      e.preventDefault();
+      try {
+        console.log(employeeEmail)
+        const { data1 } = await axios.get(
+          `https://localhost:7153/api/flags/${email}/yellow`,
+          
+        );
+        console.log("data ", data1);
+       
+        // toast.success("Login successfully");
+        
+        
+        // navigate("/");
+      } catch (err) {
+        console.log(err);
+        // toast.error("Something went wrong login through google account");
+      }
+    };
+  
+
+  const Red = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(employeeEmail)
+      const { data1 } = await axios.get(
+        `https://localhost:7153/api/flags/${email}/red`,
+        
+      );
+      console.log("data ", data1);
+     
+      // toast.success("Login successfully");
+      
+      
+      // navigate("/");
+    } catch (err) {
+      console.log(err);
+      // toast.error("Something went wrong login through google account");
+    }
+  };
+
+
+
+
   return (
     <div>
  <div>
@@ -187,10 +253,10 @@ const Profile = () => {
             </div>
             <div >
 <button  className='btn btn-primary m-3' onClick={() => handleClick(users.employeeEmail)}>Verify Aaadhar</button>
-<button type="button" className="btn btn-outline-secondary m-3"  >Delete</button>
-<button type="button" className="btn btn-outline-success m-3" onClick={() => Green(users.employeeEmail)}>Green Flag</button>
-<button type="button" className="btn btn-outline-danger m-3">Red Flag</button>
-<button type="button" className="btn btn-outline-warning m-3">Yellow Flag</button>
+<button type="button"  className="btn btn-outline-secondary m-3"  >Delete</button>
+<button type="button" onClick={Green} className="btn btn-outline-success m-3" >Green Flag</button>
+<button type="button" onClick={Red} className="btn btn-outline-danger m-3">Red Flag</button>
+<button type="button" onClick={Yellow} className="btn btn-outline-warning m-3">Yellow Flag</button>
     </div>
     <br></br>
 <h1 className='ml-3'>Aaadhar Details</h1>
@@ -199,28 +265,28 @@ const Profile = () => {
               <div className="card-body">
                 <div className="row">
                   <div className="col-sm-3">
-                    <p className="mb-0">Aaadhar Name</p>
+                    <p className="mb-0">DOB</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{users.employeeName}</p>
+                    <p className="text-muted mb-0">{aadhaarUser && aadhaarUser.dob}</p>
                   </div>
                 </div>
                 <hr />
                 <div className="row">
                   <div className="col-sm-3">
-                    <p className="mb-0">Address</p>
+                    <p className="mb-0">Gender</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{users.email}</p>
+                    <p className="text-muted mb-0">{aadhaarUser && aadhaarUser.gender}</p>
                   </div>
                 </div>
                 <hr />
                 <div className="row">
                   <div className="col-sm-3">
-                    <p className="mb-0">Aadhar Number</p>
+                    <p className="mb-0">House</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{users.mobile}</p>
+                    <p className="text-muted mb-0">{aadhaarUser && aadhaarUser.house}</p>
                   </div>
                 </div>
                 <hr />
@@ -228,29 +294,29 @@ const Profile = () => {
                   
                 <div className="row">
                   <div className="col-sm-3">
-                    <p className="mb-0">Gender</p>
+                    <p className="mb-0">Street</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{users.address}</p>
+                    <p className="text-muted mb-0">{aadhaarUser && aadhaarUser.street}</p>
                   </div>
                 </div>
                 <hr />
                 <div className="row">
                   <div className="col-sm-3">
-                    <p className="mb-0">ZIP</p>
+                    <p className="mb-0">Sub District</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{users.pan}</p>
+                    <p className="text-muted mb-0">{aadhaarUser && aadhaarUser.subdist}</p>
                   </div>
                 </div>
                 <hr />
 
                 <div className="row">
                   <div className="col-sm-3">
-                    <p className="mb-0">DOB</p>
+                    <p className="mb-0">City</p>
                   </div>
                   <div className="col-sm-9">
-                    <p className="text-muted mb-0">{users.previousCompany}</p>
+                    <p className="text-muted mb-0">{aadhaarUser && aadhaarUser.vtc}</p>
                   </div>
                 </div>
                 <hr />

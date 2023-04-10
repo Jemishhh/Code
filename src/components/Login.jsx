@@ -96,7 +96,7 @@ function Login() {
 
                 {/* <!-- Submit button --> */}
                 <div class="d-flex justify-content-center mb-4">
-                <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Sign Up</button>
+                <button className="btn btn-primary btn-block mb-4" onClick={handleSubmit}> Login</button>
 
                 </div>  
        

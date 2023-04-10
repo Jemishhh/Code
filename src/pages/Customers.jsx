@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { customersData, customersGrid } from '../data/dummy';
 import { Header } from '../components';
@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Customers = () => {
   const selectionsettings = { persistSelection: true };
+  const eleRef = useRef();
   const toolbarOptions = ['Delete'];
   const editing = { allowDeleting: false, allowEditing: false };
   
   const [users, setUsers] = useState([]);
   const navigate = useNavigate()
+  // const [flag, setFlag] = useState('yellow')
 
   useEffect(() => {
     const email = localStorage.getItem("email")
@@ -38,8 +40,11 @@ const Customers = () => {
 
   const handleClick = (email) => {
     navigate(`/user/${email}`);
+
+
   }
 
+ 
   return (
     <>
       <div>
@@ -63,13 +68,21 @@ const Customers = () => {
                 <td>{obj?.employeeEmail}</td>
                 <td>{obj?.mobile}</td>
                 <td>{obj?.address}</td>
-                <td>{obj?.flags}</td>
+                <td className='myElement' 
+                // ref={eleRef}>{obj?.flag} ==='green' ? (backgroundColor: flag )
+                style={{
+                  backgroundColor: `${obj.flag}`
+                }}
+                >
+                </td>
               </tr>
             )
          }
           
            </tbody>
            </table>
+
+           
            </div>
 
 
@@ -82,6 +95,7 @@ const Customers = () => {
 
 
 </div>
+
 
     </>
   );

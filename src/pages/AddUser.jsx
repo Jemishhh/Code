@@ -62,7 +62,7 @@ const AddUser = () => {
         <div className="col-lg-6 mb-5 mb-lg-0">
           <h1 className="my-5 display-3 fw-bold ls-tight">
             Enter <br />
-            <span className="text-primary">Employer Details</span>
+            <span className="text-primary">Employee Details</span>
           </h1>
           <p style={{color: "hsl(217, 10%, 50.8%)"}}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -118,12 +118,12 @@ const AddUser = () => {
                   
                 </div>
 
-                <div className="form-outline mb-4">
+                {/* <div className="form-outline mb-4">
                 <label className="form-label" for="form3Example3">Flags</label>
                   <input type="text" id="form3Example3" className="form-control" onChange={(e) => setFlag(e.target.value)} />
                   
                 </div>
-              
+               */}
                 {/* <div className="form-outline mb-4">
                   <input type="file" id="form3Example3" className="form-control"  />
                   <label className="form-label" for="form3Example3">Photo</label>
